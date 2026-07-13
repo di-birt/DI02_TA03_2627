@@ -19,7 +19,7 @@ export class AddRestauranteModalComponent {
 
   guardando = signal(false);
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     documentName: ['', Validators.required],
     territory:    ['', Validators.required],
     locality:     [''],
@@ -42,7 +42,56 @@ export class AddRestauranteModalComponent {
 
     this.guardando.set(true);
     try {
-      const restaurante = this.form.value as unknown as Restaurante;
+      const restaurante: Restaurante = {
+        ...this.form.getRawValue(),
+        documentDescription: '',
+        templateType: '',
+        localityQ: '',
+        qualityQ: '',
+        qualityIconDescription: '',
+        accesibility: '',
+        accesibilityIconDescription: '',
+        marks: '',
+        physical: '',
+        visual: '',
+        auditive: '',
+        intellectual: '',
+        organic: '',
+        qualityAssurance: '',
+        tourismEmail: '',
+        importance: '',
+        room: '',
+        productClub: '',
+        visit: '',
+        capacity: '',
+        store: '',
+        gastronomical: '',
+        surfing: '',
+        postalCode: '',
+        restorationType: '',
+        recomended: '',
+        recomendedURLIcon: '',
+        recomendedIconDescription: '',
+        restaurant: '',
+        bodega: '',
+        latitudelongitude: '',
+        latwgs84: '',
+        lonwgs84: '',
+        placename: '',
+        municipality: '',
+        municipalitycode: '',
+        postalcode: '',
+        territorycode: '',
+        country: '',
+        countrycode: '',
+        email: '',
+        webpage: '',
+        friendlyUrl: '',
+        physicalUrl: '',
+        dataXML: '',
+        metadataXML: '',
+        zipFile: '',
+      };
       await this.restauranteService.add(restaurante);
       await this.modalCtrl.dismiss(restaurante, 'confirm');
     } catch {
