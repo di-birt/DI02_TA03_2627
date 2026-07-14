@@ -91,6 +91,34 @@ export class HomePage {
     }
   }
 
+  // Muestra confirmación y borra el restaurante indicado de Firebase y de la lista local
+  async borrarRestaurante(r: Restaurante) {
+    const alert = await this.alertCtrl.create({
+      header: 'Confirmar borrado',
+      message: `¿Deseas borrar el restaurante <strong>${r.documentName}</strong>?`,
+      buttons: [
+        { text: 'Cancelar', role: 'cancel' },
+        {
+          text: 'Borrar', role: 'confirm', cssClass: 'danger',
+          handler: async () => {
+            if (!r.id) {
+              this.mostrarToast('No se puede borrar: el restaurante no tiene ID.', 'danger');
+              return;
+            }
+            try {
+              await this.restauranteService.delete(r.id);
+              this.restaurantesCargados.update(lista => lista.filter(x => x.id !== r.id));
+              this.mostrarToast(`${r.documentName} eliminado`, 'success');
+            } catch {
+              this.mostrarToast('Error al borrar el restaurante', 'danger');
+            }
+          }
+        }
+      ]
+    });
+    await alert.present();
+  }
+
   // Abre el modal para añadir un restaurante nuevo
   async abrirModalAnadir() {
     const modal = await this.modalCtrl.create({
