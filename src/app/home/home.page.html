@@ -137,7 +137,6 @@
             <th>Web</th>
             <th>Estrellas Michelin</th>
             <th>Soles Repsol</th>
-            <th>Borrar</th>
           </tr>
         </thead>
         <tbody>
@@ -160,13 +159,6 @@
               </td>
               <td class="center">
                 {{ repsolSoles(r) > 0 ? repsolSoles(r) : '-' }}
-              </td>
-              <td class="center">
-                <ion-button fill="clear" color="danger" size="small"
-                  title="Borrar restaurante"
-                  (click)="borrarRestaurante(r)">
-                  Borrar
-                </ion-button>
               </td>
             </tr>
           }
